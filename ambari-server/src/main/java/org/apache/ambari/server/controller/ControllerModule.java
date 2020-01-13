@@ -308,6 +308,8 @@ public class ControllerModule extends AbstractModule {
       dataSource.setAcquireIncrement(configuration.getConnectionPoolAcquisitionSize());
       dataSource.setAcquireRetryAttempts(configuration.getConnectionPoolAcquisitionRetryAttempts());
       dataSource.setAcquireRetryDelay(configuration.getConnectionPoolAcquisitionRetryDelay());
+      dataSource.setNumHelperThreads(configuration.getConnectionNumHelperThreads());
+      dataSource.setMaxAdministrativeTaskTime(configuration.getMaxAdministrativeTaskTime());
 
       // validity
       dataSource.setMaxConnectionAge(configuration.getConnectionPoolMaximumAge());

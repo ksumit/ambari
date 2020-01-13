@@ -1328,6 +1328,27 @@ public class Configuration {
       "server.jdbc.connection-pool.acquisition-retry-delay", 1000);
 
   /**
+   * Number of helper threads to handle administrative tasks (ex: acquire a Connection from the database, to test a
+   * Connection, or to destroy a Connection) for the connection pool. Only used with {@link ConnectionPoolType#C3P0}.
+   */
+  @Markdown(
+          relatedTo = "server.jdbc.connection-pool",
+          description = "Number of helper threads to handle administrative tasks for the connection pool. Only used with c3p0.")
+  public static final ConfigurationProperty<Integer> SERVER_JDBC_CONNECTION_POOL_NUM_HELPER_THREAD_COUNT = new ConfigurationProperty<>(
+          "server.jdbc.connection-pool.num-helper-threads", 10);
+
+  /**
+   * Max allowed time for administrative tasks (ex: acquire a Connection from the database, to test a Connection, or to
+   * destroy a Connection) for the connection pool. After this time has passed, the task will be interrupted in c3p0's
+   * threadpool. Only used with {@link ConnectionPoolType#C3P0}.
+   */
+  @Markdown(
+          relatedTo = "server.jdbc.connection-pool",
+          description = "Max allowed time for administrative tasks for the connection pool. Only used with c3p0.")
+  public static final ConfigurationProperty<Integer> SERVER_JDBC_CONNECTION_POOL_MAX_ADMINISTRATIVE_TASK_TIME = new ConfigurationProperty<>(
+          "server.jdbc.connection-pool.max-administrative-task-time", 30);
+
+  /**
    * The number of retry attempts for failed API and blueprint operations.
    */
   @Markdown(description = "The number of retry attempts for failed API and blueprint operations.")
@@ -5097,6 +5118,13 @@ public class Configuration {
     return Integer.parseInt(getProperty(SERVER_JDBC_CONNECTION_POOL_IDLE_TEST_INTERVAL));
   }
 
+  public int getConnectionNumHelperThreads() {
+    return Integer.parseInt(getProperty(SERVER_JDBC_CONNECTION_POOL_NUM_HELPER_THREAD_COUNT));
+  }
+
+  public int getMaxAdministrativeTaskTime() {
+    return Integer.parseInt(getProperty(SERVER_JDBC_CONNECTION_POOL_MAX_ADMINISTRATIVE_TASK_TIME));
+  }
   /**
    * Sets a property on the configuration.
    *
